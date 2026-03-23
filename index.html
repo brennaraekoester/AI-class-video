@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Minimal Landing Page</title>
 
+<style>
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #ffffff;
+        color: #222;
+        transition: background 0.3s, color 0.3s;
+    }
+    body.dark {
+        background: #111;
+        color: #e5e5e5;
+    }
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 24px;
+        border-bottom: 1px solid #ddd;
+    }
+    header.dark {
+        border-color: #444;
+    }
+    .btn-group button {
+        padding: 8px 12px;
+        margin-left: 8px;
+        cursor: pointer;
+        background: #eee;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+    body.dark .btn-group button {
+        background: #333;
+        color: #eee;
+        border-color: #555;
+    }
+    section {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 0 24px;
+    }
+    h2 {
+        border-left: 4px solid #999;
+        padding-left: 10px;
+        margin-top: 50px;
+        font-weight: 600;
+    }
+    .video-container {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 820px;
+    }
+    video, iframe {
+        width: 100%;
+        border-radius: 8px;
+    }
+    audio {
+        width: 100%;
+        margin-top: 15px;
+    }
+</style>
+</head>
+
+<body>
+<header>
+    <div><strong id="titleText">미니멀 랜딩 페이지</strong></div>
+    <div class="btn-group">
+        <button id="langToggle">한 / EN</button>
+        <button id="modeToggle">Light / Dark</button>
+    </div>
+</header>
+
+<section>
+    <h2 id="featureTitle">🎧 메인 오디오 콘텐츠</h2>
+    <p id="audioDesc">
+        아래 플레이어는 GitHub 저장소에 업로드된 MP3 파일을 재생합니다.
+    </p>
+
+    <!-- 🔊 PLACE YOUR MP3 FILE URL HERE -->
+    <!-- Example: <audio controls src="assets/music.mp3"></audio> -->
+    <audio id="audioPlayer" controls src="assets/your_audio.mp3"></audio>
+</section>
+
+<section>
+    <h2 id="tutorialTitle">📘 튜토리얼</h2>
+    <p id="tutorialDesc">
+        이 페이지는 GitHub Pages에서 구동되며, 간단한 HTML 구조만으로도 깔끔한 랜딩 페이지를 만드는 방법을 안내합니다.
+    </p>
+</section>
+
+<section>
+    <h2 id="video1Title">📹 로컬 MP4 영상</h2>
+    <p id="video1Desc">아래 영상은 저장소 루트의 MP4 파일을 불러옵니다.</p>
+
+    <div class="video-container">
+        <!-- Local MP4 -->
+        <video controls>
+            <source src="assets/pinkswan_small.mp4" type="video/mp4" />
+        </video>
+    </div>
+</section>
+
+<section>
+    <h2 id="video2Title">▶️ YouTube 임베드 영상</h2>
+    <p id="video2Desc">아래는 YouTube 영상입니다.</p>
+
+    <div class="video-container">
+        <iframe 
+            src="https://www.youtube.com/embed/65B_GoV-qoE?si=26RZkk97N60Gz_RF"
+            title="YouTube video" 
+            frameborder="0"
+            allowfullscreen>
+        </iframe>
+    </div>
+</section>
+
+<script>
+/* -------------------------
+   LANGUAGE TOGGLE SYSTEM
+--------------------------*/
+
+let isKorean = true;
+
+const langContent = {
+    ko: {
+        title: "미니멀 랜딩 페이지",
+        featureTitle: "🎧 메인 오디오 콘텐츠",
+        audioDesc: "아래 플레이어는 GitHub 저장소에 업로드된 MP3 파일을 재생합니다.",
+        tutorialTitle: "📘 튜토리얼",
+        tutorialDesc: "이 페이지는 GitHub Pages에서 구동되며, 간단한 HTML 구조만으로도 깔끔한 랜딩 페이지를 만드는 방법을 안내합니다.",
+        video1Title: "📹 로컬 MP4 영상",
+        video1Desc: "아래 영상은 저장소 루트의 MP4 파일을 불러옵니다.",
+        video2Title: "▶️ YouTube 임베드 영상",
+        video2Desc: "아래는 YouTube 영상입니다."
+    },
+    en: {
+        title: "Minimal Landing Page",
+        featureTitle: "🎧 Main Audio Feature",
+        audioDesc: "The player below plays an MP3 file uploaded to your GitHub repository.",
+        tutorialTitle: "📘 Tutorial",
+        tutorialDesc: "This page runs on GitHub Pages and shows how a clean landing page can be built with simple HTML.",
+        video1Title: "📹 Local MP4 Video",
+        video1Desc: "This video loads from the MP4 file in the repository root.",
+        video2Title: "▶️ YouTube Embedded Video",
+        video2Desc: "Below is the embedded YouTube video."
+    }
+};
+
+document.getElementById("langToggle").addEventListener("click", () => {
+    isKorean = !isKorean;
+    const lang = isKorean ? "ko" : "en";
+
+    document.getElementById("titleText").innerText = langContent[lang].title;
+    document.getElementById("featureTitle").innerText = langContent[lang].featureTitle;
+    document.getElementById("audioDesc").innerText = langContent[lang].audioDesc;
+    document.getElementById("tutorialTitle").innerText = langContent[lang].tutorialTitle;
+    document.getElementById("tutorialDesc").innerText = langContent[lang].tutorialDesc;
+    document.getElementById("video1Title").innerText = langContent[lang].video1Title;
+    document.getElementById("video1Desc").innerText = langContent[lang].video1Desc;
+    document.getElementById("video2Title").innerText = langContent[lang].video2Title;
+    document.getElementById("video2Desc").innerText = langContent[lang].video2Desc;
+});
+
+/* -------------------------
+     LIGHT / DARK MODE
+--------------------------*/
+
+document.getElementById("modeToggle").addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+});
+</script>
+
+</body>
+</html>
+``
